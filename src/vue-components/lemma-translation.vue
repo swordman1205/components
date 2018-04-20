@@ -16,13 +16,11 @@ export default {
 }
 </script>
 <style lang="scss">
-.lemma-translation {
-  h5 {
-    margin-top: 5px 0 0 9px;
-    font-weight: 600;
-  }
-  p {
-    margin: 0 0 0 20px;
-  }
+.lemma-translation h5 {
+  margin-top: 5px 0 0 9px;
+  font-weight: 600;
+}
+.lemma-translation p {
+  margin: 0 0 0 20px;
 }
 </style>
