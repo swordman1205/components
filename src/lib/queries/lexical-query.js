@@ -14,6 +14,7 @@ export default class LexicalQuery extends Query {
     this.langOpts = options.langOpts
     this.resourceOptions = options.resourceOptions
     this.l10n = options.l10n
+    this.lemmaAdapter = options.lemmaAdapter
     let langID = LMF.getLanguageIdFromCode(this.selector.languageCode)
     if (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast) {
       this.canReset = true
@@ -67,8 +68,14 @@ export default class LexicalQuery extends Query {
       this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
     }
 
+    this.translations = yield this.lemmaAdapter.getTranslation(this.homonym.lexemes.map(lexeme => lexeme.lemma), this.ui.settings.lang)
+    this.homonym.lexemes.forEach((lexeme, index) => {
+      lexeme.lemma.translation = this.translations[index]
+    })
+
     this.ui.updateMorphology(this.homonym)
     this.ui.updateDefinitions(this.homonym)
+    this.ui.updateTranslation(this.homonym)
     // Update status info with data from a morphological analyzer
     this.ui.showStatusInfo(this.homonym.targetWord, this.homonym.languageID)
 

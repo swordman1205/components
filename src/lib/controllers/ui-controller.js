@@ -114,7 +114,8 @@ export default class UIController {
             zIndex: this.zIndex
           },
           minWidth: 400,
-          l10n: this.l10n
+          l10n: this.l10n,
+          lemmaTranslatable: false
         },
         state: this.state,
         options: this.options,
@@ -370,7 +371,8 @@ export default class UIController {
           status: {
             selectedText: '',
             languageName: ''
-          }
+          },
+          lemmaTranslatable: false
         },
         panel: this.panel,
         options: this.options,
@@ -514,7 +516,8 @@ export default class UIController {
     return {
       uiTypePanel: 'panel',
       uiTypePopup: 'popup',
-      verboseMode: 'verbose'
+      verboseMode: 'verbose',
+      lang: 'eng'
     }
   }
 
@@ -648,6 +651,16 @@ export default class UIController {
     this.panel.panelData.lexemes = homonym.lexemes
     this.popup.popupData.updates = this.popup.popupData.updates + 1
     this.updateProviders(homonym)
+  }
+
+  updateTranslation (homonym) {
+    for (let lexeme of homonym.lexemes) {
+      if (lexeme.lemma.translation && lexeme.lemma.translation.translations[0]) {
+        this.popup.popupData.lemmaTranslatable = true
+        this.panel.panelData.lemmaTranslatable = true
+        break
+      }
+    }
   }
 
   updateProviders (homonym) {

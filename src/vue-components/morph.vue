@@ -77,6 +77,7 @@
           </div>
         </div>
       </div>
+      <lemmatranslation :lemma="lex.lemma" v-if="lex.lemma.translation.translations && lex.lemma.translation.translations[0]"/>
     </div>
   </div>
 </template>
@@ -84,10 +85,15 @@
   import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
   import ShortDef from './shortdef.vue'
   import InflectionAttribute from './infl-attribute.vue'
+  import LemmaTranslation from './lemma-translation.vue'
 
   export default {
     name: 'Morph',
-    components: { shortdef: ShortDef, inflectionattribute: InflectionAttribute },
+    components: { 
+      shortdef: ShortDef, 
+      inflectionattribute: InflectionAttribute,
+      lemmatranslation: LemmaTranslation
+    },
     props: {
         lexemes: {
           type: Array,
